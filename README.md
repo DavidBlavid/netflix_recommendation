@@ -1,1 +1,5 @@
-"# netflix_recommendations" 
+# Netflix Recommendations
+
+
+
+© Lenny Bakkalian _(Chief Executive Officer)_

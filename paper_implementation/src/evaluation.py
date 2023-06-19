@@ -59,7 +59,7 @@ def rate_user_recommendations(user_recommendations: list[int], user_masked_films
     """
 
     good_ratings = {film for film, rating in zip(user_masked_films, user_masked_ratings) if rating > 3}
-    matches = [film.item() for film in user_recommendations if film.item() in good_ratings]
+    matches = [film for film in user_recommendations if film.item() in good_ratings]
     return len(matches) / len(good_ratings)
 
 
@@ -81,5 +81,5 @@ def evaluate_batch(subset: pd.DataFrame, model: torch.nn.Sequential, n_recommend
     recommendations = recommend_n_movies(model, batch, embeddings, n_recommendations, device, n_movies)
     recommender_score = 0
     for user_recommendations, user_masked_films, user_masked_ratings in zip(recommendations, batch.masked_films, batch.masked_ratings):
-        recommender_score += rate_user_recommendations(user_recommendations, user_masked_films, user_masked_ratings)
+        recommender_score += rate_user_recommendations([rec.item() for rec in user_recommendations], user_masked_films, user_masked_ratings)
     return recommender_score

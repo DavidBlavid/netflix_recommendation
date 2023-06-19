@@ -30,35 +30,11 @@ class Autoencoder(nn.Module):
     def __init__(self, input_size):
         super(Autoencoder, self).__init__()
         self.encoder = nn.Sequential(
-            nn.Linear(input_size, 1024),
-            nn.BatchNorm1d(1024),
-            nn.SELU(),
-
-            nn.Linear(1024, 512),
-            nn.BatchNorm1d(512),
-            nn.SELU(),
-
-            nn.Linear(512, 256),
+            nn.Linear(input_size, 256),
             nn.BatchNorm1d(256),
             nn.SELU(),
 
-            nn.Linear(256, 128),
-            nn.BatchNorm1d(128),
-            nn.SELU(),
-
-            nn.Linear(128, 64),
-            nn.BatchNorm1d(64),
-            nn.SELU(),
-
-            nn.Dropout(0.8)
-
-        )
-        self.decoder = nn.Sequential(
-            nn.Linear(64, 128),
-            nn.BatchNorm1d(128),
-            nn.SELU(),
-
-            nn.Linear(128, 256),
+            nn.Linear(256, 256),
             nn.BatchNorm1d(256),
             nn.SELU(),
 
@@ -66,7 +42,23 @@ class Autoencoder(nn.Module):
             nn.BatchNorm1d(512),
             nn.SELU(),
 
-            nn.Linear(512, input_size),
+            nn.Dropout(0.8)
+
+        )
+        self.decoder = nn.Sequential(
+            nn.Linear(512, 256),
+            nn.BatchNorm1d(256),
+            nn.SELU(),
+
+            nn.Linear(256, 256),
+            nn.BatchNorm1d(256),
+            nn.SELU(),
+
+            nn.Linear(256, 256),
+            nn.BatchNorm1d(256),
+            nn.SELU(),
+
+            nn.Linear(256, input_size),
         )
     
     def forward(self, x):

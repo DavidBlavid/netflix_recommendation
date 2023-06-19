@@ -1,6 +1,7 @@
 import gc
 import polars as pl
 import datetime as dt
+import pandas as pd
 
 def clean_data():
     print("Cleaning data...")
@@ -36,7 +37,16 @@ def clean_data():
     return data, movies
 
 
-def split_data(data: pl.DataFrame, date: dt.datetime):
+def split_data(data: pl.DataFrame, date: dt.datetime) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Split data into train and test set.
+
+    Args:
+        data (pl.DataFrame): polars dataframe with columns: user, film, rating, date
+        date (dt.datetime): date to split data on
+
+    Returns:
+        tuple[pd.DataFrame, pd.DataFrame]: train and test set as pandas dataframes. testset has additional column is_masked which states if the rating is masked or not.
+    """
     train = data.filter(pl.col("date") < date) \
         .groupby("user") \
         .agg(pl.col("film"), pl.col("rating"))

@@ -59,7 +59,7 @@ def rate_user_recommendations(user_recommendations: list[int], user_masked_films
     """
 
     good_ratings = {film for film, rating in zip(user_masked_films, user_masked_ratings) if rating > 3}
-    matches = [film for film in user_recommendations if film.item() in good_ratings]
+    matches = [film for film in user_recommendations if film in good_ratings]
     return len(matches) / len(good_ratings)
 
 

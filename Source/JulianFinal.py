@@ -77,7 +77,7 @@ class Cosine_Similarity:
                 
         return sim_scores
     
-'''c = Cosine_Similarity()
+c = Cosine_Similarity()
 
-print (c.get_movie_cos_scores(17500))
-'''
+print (c.get_movie_cos_scores(300))
+
